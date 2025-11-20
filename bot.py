@@ -1,15 +1,14 @@
 import json
 import os
-from openai import OpenAI
 import re
 import csv
 from datetime import datetime
+import subprocess
 
 # -----------------------------
 # Config
 # -----------------------------
-USE_OPENAI = False  # Set True to use OpenAI API
-client = OpenAI()   # Reads OPENAI_API_KEY automatically from environment
+OLLAMA_MODEL = "llama3.2:3b"  # Small local model, fast and accurateclient = OpenAI()   # Reads OPENAI_API_KEY automatically from environment
 
 STOP_WORDS = {
     "the", "for", "when", "a", "my", "to", "in", "on", "and",
@@ -39,14 +38,10 @@ def find_best_article(question, kb):
             best_article = article
     return best_article
 
-def ask_openai(user_question, kb_article):
+def ask_ollama(user_question, kb_article):
     """
-    Returns a polished step-by-step answer.
-    Uses mock response if USE_OPENAI = False
+    Returns a polished step-by-step answer using a local Ollama LLM.
     """
-    if not USE_OPENAI:
-        return f"Step-by-step solution (mocked):\n{kb_article['content']}"
-
     prompt = f"""
 You are an IT helpdesk assistant.
 User question: "{user_question}"
@@ -57,15 +52,18 @@ Give a clear, step-by-step solution for the user.
 If you cannot fully explain, suggest escalating to a human technician.
 """
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            max_tokens=300
+        result = subprocess.run(
+            ["ollama", "run", "llama3.2:3b", prompt],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
         )
-        return response.choices[0].message.content
+        output = result.stdout.decode("utf-8").strip()
+        if not output:
+            return f"Error: {result.stderr.decode('utf-8').strip()}"
+        return output
     except Exception as e:
-        return f"Error: {e}"
+        return f"Error running Ollama: {e}"
+
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -93,10 +91,10 @@ def log_interaction(question, article_title, success=None):
 # -----------------------------
 if __name__ == "__main__":
     clear_terminal()
-    print("AI Helpdesk Chatbot (mock mode)" if not USE_OPENAI else "AI Helpdesk Chatbot")
+    print("AI Helpdesk Chatbot (local mode)")
 
     while True:
-        user_input = input("\nAsk a question (or type 'quit')\n > ")
+        user_input = input("\nAsk a question (or type 'quit')\n > ").strip()
         if user_input.lower() == "quit":
             break
 
@@ -104,12 +102,12 @@ if __name__ == "__main__":
 
         if article:
             print("\nMatched article:", article["title"])
-            answer = ask_openai(user_input, article)
+            answer = ask_ollama(user_input, article)
             print("\nAI Answer:\n", answer)
 
             # Ask if the solution helped
             success_input = input("Did this solution help? (y/n) > ").lower()
-            success = True if success_input == "y" else False
+            success = success_input == "y"
             log_interaction(user_input, article["title"], success)
 
         else:
