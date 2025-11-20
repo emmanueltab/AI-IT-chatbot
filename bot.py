@@ -10,23 +10,36 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 with open("kb.json") as f:
     kb = json.load(f)["articles"]
 
-def clean_text(text):
-    return re.sub(r"[^a-z0-9\s]", "", text.lower())
+# Define common stop words
+STOP_WORDS = {"the", "for", "when", "a", "my", "to", "in", "on", "and", "is", "it", "of", "an", "or", "with", "at", "by"}
 
+def clean_text(text):
+    """
+    1. Lowercases the text
+    2. Removes punctuation/special characters
+    3. Removes common stop words
+    Returns a list of meaningful words
+    """
+    # Lowercase and remove non-alphanumeric characters
+    text = re.sub(r"[^a-z0-9\s]", "", text.lower())
+    # Split into words and filter out stop words
+    words = [word for word in text.split() if word not in STOP_WORDS]
+    return words
 
 def find_best_article(question, kb):
-    question_words = clean_text(question).spit()
+    question_words = clean_text(question)
     best_article = None
     best_score = 0
 
     for article in kb:
-        # Combine title + content and clean it
-        content_words = clean_text(article["title"] + " " + article["content"]).split()
+        content_words = clean_text(article["title"] + " " + article["content"])
+        # Score = number of matching words
         score = sum(1 for w in question_words if w in content_words)
         if score > best_score:
             best_score = score
             best_article = article
 
     return best_article
+
 
 print(find_best_article("my laptop cant connect to the wifi", kb))
