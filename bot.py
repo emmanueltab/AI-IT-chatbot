@@ -11,21 +11,21 @@ with open("kb.json") as f:
     kb = json.load(f)["articles"]
 
 def clean_text(text):
-    return re.sub(r"[^a-z0-9\s]", "", text.lower())# Find the best matching article based on keyword overlap
+    return re.sub(r"[^a-z0-9\s]", "", text.lower())
+
+
 def find_best_article(question, kb):
-    question = question.lower()
+    question_words = clean_text(question).spit()
     best_article = None
     best_score = 0
 
-    for article in kb:  # fixed typo
-        score = 0
-        for word in question.split():
-            if word in article["content"].lower() or word in article["title"].lower():
-                score += 1
-
+    for article in kb:
+        # Combine title + content and clean it
+        content_words = clean_text(article["title"] + " " + article["content"]).split()
+        score = sum(1 for w in question_words if w in content_words)
         if score > best_score:
             best_score = score
-            best_article = article  # fixed typo
+            best_article = article
 
     return best_article
 
