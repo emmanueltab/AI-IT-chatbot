@@ -11,7 +11,38 @@
     {
       "title": "Slow Computer",
       "content": "Close background apps, remove unused programs, scan for malware."
+    },
+    {
+      "title": "How to install Windows 11",
+      "content": "Have a wiped USB drive, download Windows Installation Media, ensure USB has top boot priority in the BIOS, plug in the USB."
+    },
+    {
+      "title": "Email Not Sending",
+      "content": "Check internet connection, verify SMTP settings, ensure email account credentials are correct, and restart your email client."
+    },
+    {
+      "title": "Forgot Windows Password",
+      "content": "Use a password reset disk if available, try using another admin account, or boot into safe mode to reset the password."
+    },
+    {
+      "title": "Software Installation Error",
+      "content": "Check system requirements, ensure no conflicting software is running, run installer as administrator, and check for updates."
+    },
+    {
+      "title": "Blue Screen Error",
+      "content": "Note the error code, check for recently installed drivers or updates, run memory diagnostics, and scan for malware."
+    },
+    {
+      "title": "Computer Wont Turn On",
+      "content": "Ensure power cable is plugged in, check power outlet, remove battery (if laptop) and retry, and reset the power supply if needed."
+    },
+    {
+      "title": "Slow Internet",
+      "content": "Restart your modem/router, check for bandwidth-heavy apps, ensure firmware is updated, and contact your ISP if issue persists."
+    },
+    {
+      "title": "Remove Windows and Install Linux Mint",
+      "content": "Back up all your data, create a bootable USB with Linux Mint, boot from the USB, choose to erase the disk and install Linux Mint, follow the installation prompts, then reboot."
     }
   ]
 }
-
