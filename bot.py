@@ -77,6 +77,18 @@ with open("kb.json") as f:
     kb = json.load(f)["articles"]
 
 # -----------------------------
+# Logs Interactions for Data Analysis 
+# -----------------------------
+def log_interaction(question, article_title, success=None):
+    """
+    Logs each user interaction to 'chat_log.csv'.
+    success: optional flag (True/False) to indicate if the solution worked
+    """
+    with open("chat_log.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([datetime.now(), question, article_title, success])
+        
+# -----------------------------
 # Main Loop
 # -----------------------------
 if __name__ == "__main__":
@@ -89,9 +101,20 @@ if __name__ == "__main__":
             break
 
         article = find_best_article(user_input, kb)
+
         if article:
             print("\nMatched article:", article["title"])
             answer = ask_openai(user_input, article)
             print("\nAI Answer:\n", answer)
+
+            # Ask if the solution helped
+            success_input = input("Did this solution help? (y/n) > ").lower()
+            success = True if success_input == "y" else False
+            log_interaction(user_input, article["title"], success)
+
         else:
             print("No relevant article found. Try rephrasing your question.")
+            log_interaction(user_input, "No Match", success=False)
+
+
+
