@@ -6,10 +6,6 @@ import re
 # Make sure your environment variable is named OPENAI_API_KEY
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Load knowledge base
-with open("kb.json") as f:
-    kb = json.load(f)["articles"]
-
 # Define common stop words
 STOP_WORDS = {"the", "for", "when", "a", "my", "to", "in", "on", "and", "is", "it", "of", "an", "or", "with", "at", "by"}
 
@@ -41,5 +37,10 @@ def find_best_article(question, kb):
 
     return best_article
 
+# Load knowledge base
+with open("kb.json") as f:
+    kb = json.load(f)["articles"]
 
-print(find_best_article("my laptop cant connect to the wifi", kb))
+# main:
+if __name__ == "__main__":
+    print(find_best_article("my laptop cant connect to the wifi", kb))
