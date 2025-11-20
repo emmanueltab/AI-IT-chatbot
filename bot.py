@@ -65,10 +65,6 @@ If you cannot fully explain, suggest escalating to a human technician.
     except Exception as e:
         return f"Error: {e}"
 
-
-
-
-
 # Load knowledge base
 with open("kb.json") as f:
     kb = json.load(f)["articles"]
