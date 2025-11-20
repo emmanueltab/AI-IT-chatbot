@@ -2,6 +2,8 @@ import json
 import os
 from openai import OpenAI
 import re
+import csv
+from datetime import datetime
 
 # -----------------------------
 # Config
@@ -48,7 +50,6 @@ def ask_openai(user_question, kb_article):
     prompt = f"""
 You are an IT helpdesk assistant.
 User question: "{user_question}"
-
 Use this article to answer:
 "{kb_article['content']}"
 
