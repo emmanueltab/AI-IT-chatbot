@@ -43,6 +43,34 @@
     {
       "title": "Remove Windows and Install Linux Mint",
       "content": "Back up all your data, create a bootable USB with Linux Mint, boot from the USB, choose to erase the disk and install Linux Mint, follow the installation prompts, then reboot."
+    },
+    {
+      "title": "Browser Crashing",
+      "content": "Clear cache and cookies, disable extensions, update your browser, or reinstall if necessary."
+    },
+    {
+      "title": "Overheating Laptop",
+      "content": "Clean dust from vents, ensure proper airflow, check for background processes using CPU, and replace thermal paste if needed."
+    },
+    {
+      "title": "Lost Files Recovery",
+      "content": "Check recycle bin, use file recovery software, or restore from backup."
+    },
+    {
+      "title": "USB Drive Not Recognized",
+      "content": "Try a different USB port, check device manager for driver issues, format the drive if necessary, and ensure file system compatibility."
+    },
+    {
+      "title": "Linux Mint Installation Issues",
+      "content": "Verify ISO checksum, create a proper bootable USB, disable secure boot if needed, and check hardware compatibility before installing."
+    },
+    {
+      "title": "Antivirus Not Updating",
+      "content": "Check internet connection, verify subscription status, restart antivirus service, or reinstall the software."
+    },
+    {
+      "title": "Password Management",
+      "content": "Use strong and unique passwords, consider using a password manager, enable two-factor authentication whenever possible."
     }
   ]
 }
