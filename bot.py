@@ -37,6 +37,38 @@ def find_best_article(question, kb):
 
     return best_article
 
+def ask_openai(user_question, kb_article):
+    """
+    Sends the user question and KB article to OpenAI 
+    Returns a clear step-by-step answer
+    """
+    prompt = f"""
+You are an IT helpdesk assistant.
+User question: "{user_question}"
+
+Use this article to answer:
+"{kb_article['content']}"
+
+Give a clear, step-by-step solution for the user.
+If you cannot fully explain, suggest escalating to a human technician.
+"""
+
+    try: 
+        response = openai.ChatCompletion.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            max_tokens=300
+        )
+        return response["choices"][0]["message"]["content"]
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+
+
+
 # Load knowledge base
 with open("kb.json") as f:
     kb = json.load(f)["articles"]
