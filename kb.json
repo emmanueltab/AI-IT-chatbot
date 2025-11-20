@@ -1,0 +1,16 @@
+{
+  "articles": [
+    {
+      "title": "Wi-Fi Issues",
+      "content": "Check airplane mode, restart your router, update network adapter drivers."
+    },
+    {
+      "title": "Printer Problems",
+      "content": "Ensure the printer is powered on, check the connection, reinstall the driver."
+    },
+    {
+      "title": "Slow Computer",
+      "content": "Close background apps, remove unused programs, scan for malware."
+    }
+  ]
+}
