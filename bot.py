@@ -75,4 +75,17 @@ with open("kb.json") as f:
 
 # main:
 if __name__ == "__main__":
-    print(find_best_article("my laptop cant connect to the wifi", kb))
+    while True:
+        user_input = input("\nAsk a question (or type 'quit')\n >")
+        if user_input == quit:
+            break 
+
+
+        article = find_best_article(user_input, kb)
+
+        if article:
+            print("\nMatched article:", article["title"])
+            answer = ask_openai(user_input, article)
+            print("\nAI Answer:\n", answer)
+        else:
+            print("No relevant article found. Try rephrasing your question.")
