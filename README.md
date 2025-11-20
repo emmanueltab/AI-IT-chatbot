@@ -1,4 +1,4 @@
-# Helpdesk AI (Terminal) — Interview Project
+# Helpdesk AI (Terminal) — Personal Project
 
 ## Summary
 Terminal-based AI Helpdesk Chatbot with Data-Science Ticket Analytics.
