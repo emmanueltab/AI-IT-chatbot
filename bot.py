@@ -1,0 +1,1 @@
+# main terminal chatbot (OpenAi + retrival + ticket saving)
