@@ -1,6 +1,7 @@
 import json
 import os
 import openai
+import re
 
 # Make sure your environment variable is named OPENAI_API_KEY
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -9,7 +10,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 with open("kb.json") as f:
     kb = json.load(f)["articles"]
 
-# Find the best matching article based on keyword overlap
+def clean_text(text):
+    return re.sub(r"[^a-z0-9\s]", "", text.lower())# Find the best matching article based on keyword overlap
 def find_best_article(question, kb):
     question = question.lower()
     best_article = None
@@ -26,3 +28,5 @@ def find_best_article(question, kb):
             best_article = article  # fixed typo
 
     return best_article
+
+print(find_best_article("my laptop cant connect to the wifi", kb))
